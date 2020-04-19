@@ -1,7 +1,7 @@
 {
-    "name": "jedlik-typescript-vscode-template",
+    "name": "gal_istvan_footgolf_ts",
     "version": "1.0.0",
-    "description": "Jedlik project template for using TypeScript, Jest and Node.js in VS Code.",
+    "description": "Középszintű szakismereti érettségi 2018 május 16. megoldása TypeScript nyelven",
     "engines": {
         "node": "13.x"
     },

@@ -1,6 +1,7 @@
 ﻿import fs from "fs";
 import http from "http";
 import url from "url";
+import Megoldas from "./Megoldas";
 
 export default class Content {
     public content(req: http.IncomingMessage, res: http.ServerResponse): void {
@@ -17,7 +18,9 @@ export default class Content {
         res.write("<head>");
         res.write("<style>input, pre {font-family:monospace; font-size:1em; font-weight:bold;}</style>");
         res.write("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-
+        res.write("<title>Futar ts</title>");
+        res.write("</head>");
+        res.write("<body><form><pre>");
         // Material Design Bootstrap súgó: https://mdbootstrap.com/
         // Font Awesome:
         res.write("<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css'>");
@@ -34,43 +37,29 @@ export default class Content {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const params = url.parse(req.url as string, true).query;
 
-        // Kezd a kódolást innen -->
-        res.write("Egyszerű Hello World!\n");
+        // Olvassa be a fob2016.txt állományban lévő adatokat és tárolja el egy olyan adatszerkezetben, amely a további feladatok megoldására alkalmas! A fájlban legfeljebb 500 sor lehet.
+        const megold: Megoldas = new Megoldas("fob2016.txt");
 
-        // Tetszőleges html teg-ek és attribútumok beépítése:
-        res.write("<span style='color: blue;'><i>Színes és dőlt Hello World!'</i></span>\n");
+        //Határozza meg és írja ki a képernyőre a minta szerint, hogy hány versenyző indult összesen a két kategóriában a bajnokságon!
+        res.write("3. feladat:");
+        res.write(`<p>\tVersenyzők száma: ${megold.indulokszama}</p>`);
 
-        // Próbáljuk számra konvertálni a "kor" paraméter (http://localhost:8080/?kor=16) értékét:
-        let korod: number = parseInt(params.kor as string);
-        // Ha nincs "kor" paraméter megadva, vagy nem lehet számra konvertálni értékét,
-        // akkor a "korod" változóba NaN érték kerül, ilyenkor legyen 18 év az értéke:
-        if (isNaN(korod)) korod = 18;
+        //Határozza meg és írja ki a képernyőre a minta szerint a női versenyzők arányát az összes versenyzőszámhoz képest! A százalékos értéket két tizedesjegy pontossággal jelenítse meg!
+        res.write("4. feladat:");
+        res.write(`<p>\tA női versenyzők aránya:${megold.Noiversenyzok}</p>`);
 
-        res.write(`Kérem a korod: <input type='number' name='kor' value=${korod} style='max-width:100px;' onChange='this.form.submit();'>\n`);
-        res.write(`Te ${korod} éves vagy!\n`);
+        //Határozza meg és írja ki a minta szerint a 2016-os footgolf bajnokság legtöbb pontot szerzett női bajnokát! Feltételezheti, hogy legalább egy női induló volt a bajnokságon, és nem alakult ki holtverseny.
+        res.write("6. feladat:");
+        //res.write(`<p>\Név : ${megold.Noibajnok}</p>`);
 
-        res.write("Material Design for Bootstrap input demo:");
-        let email: string = params.email as string;
-        if (!email) email = "";
-        res.write("<div class='md-form  md-outline'><i class='fas fa-envelope prefix'></i>");
-        res.write(`<input type='text' name='email' id='email'  style='max-width:300px;' class='form-control' value='${email}' onChange='this.form.submit();'>`);
-        res.write("<label for='email'>E-mail cím</label></div>");
-        res.write(`Te e-mail címed: ${email}\n`);
-
+        //Készítsen szöveges állományt osszpontFF.txt néven, amelybe kiírja a felnőtt férfi kategóriában indult versenyzők nevét és a bajnokságban elért összpontszámát! A sorokban az adatokat pontosvesszővel válassza el egymástól a minta szerint!
+        res.write("7. feladat:");
+        megold.fajlbaIras;
         // <---- Fejezd be a kódolást
 
         res.write("</pre></form>");
 
-        // JQuery:
-        res.write("<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>");
-        // Bootstrap tooltips:
-        res.write("<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js'></script>");
-        // Bootstrap core JavaScript:
-        res.write("<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js'></script>");
-        // MDB core JavaScript:
-        res.write("<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/js/mdb.min.js'></script>");
-
-        res.write("</body></html>");
+        res.write("</pre></form></body></html>");
         res.end();
     }
 }
